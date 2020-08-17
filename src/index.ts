@@ -25,10 +25,10 @@ const deffaultOptions: options = {
 	quotesType: '"',
 	namedSeparator: '-',
 };
-export interface Parser {
+interface Parser {
 	pOptions: options;
 }
-export class Parser {
+class Parser {
 	constructor(options?: options) {
 		this.pOptions = { ...deffaultOptions, ...options };
 	}
@@ -97,7 +97,7 @@ export class Parser {
 		return clearArgs;
 	}
 
-	public async parse(string: string, argsDef?: Array<string>): Promise<args> {
+	public parse(string: string, argsDef?: Array<string>): args {
 		log(`Got string: |${string}| \nGot args definition: [${argsDef}]`);
 		const splitedString = this._split(string);
 		const dirtArgs: dirtArgs = {
@@ -132,11 +132,16 @@ export class Parser {
 			}
 			dirtArgs.unNamed.push(splitedString.shift());
 		}
+
 		log(`Splited array is parsed: ${JSON.stringify(dirtArgs)}`);
 		const args = this._clearArgs(dirtArgs, argsDef);
 		log(`Parsing complete ${JSON.stringify(args)}`);
+
 		return args;
 	}
 }
 
-export default Parser;
+export function parser(options?: options): Parser {
+	return new Parser(options);
+}
+export default parser;
