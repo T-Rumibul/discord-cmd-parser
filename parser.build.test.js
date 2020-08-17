@@ -1,5 +1,5 @@
-import Parser from '../dist/index';
-const parser = Parser();
+const Parser = require('./dist/index.js');
+const parser = Parser.init();
 test('test with default args without args definition', () => {
 	expect(parser.parse('git remote add origin https://github.com')).toEqual({
 		_: ['git', 'remote', 'add', 'origin', 'https://github.com'],

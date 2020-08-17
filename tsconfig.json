@@ -1,20 +1,23 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es5",
+    "lib":[
+      "esnext"
+    ],
     "module": "CommonJS",
     "moduleResolution": "node",
     "noImplicitAny": true,
-    "removeComments": true,
+    "removeComments": false,
     "preserveConstEnums": true,
     "declaration": true,
     "types": ["jest"],
     "typeRoots": ["./node_modules/@types"],
     "outDir": "dist",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": false,
+    "esModuleInterop": false,
     "sourceMap": false,
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"],
+  "include": ["src/*"],
+  "exclude": ["node_modules", "src/*.test.ts"],
   
   }

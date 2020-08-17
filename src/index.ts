@@ -96,7 +96,12 @@ class Parser {
 		log(`Args cleared: ${JSON.stringify(clearArgs)}`);
 		return clearArgs;
 	}
-
+	/** Parses string to args
+	 * @param {string} string - String to parse
+	 * @param {Array<string>} argsDef - parser will assing parsed args to keys in order they apear.
+	 * @example
+	 * console.log(parse('arg1 arg2 arg3', ['key1', 'key2'])); // ----> {_:['arg3'], key1: 'arg1', key2: 'arg2'}
+	 */
 	public parse(string: string, argsDef?: Array<string>): args {
 		log(`Got string: |${string}| \nGot args definition: [${argsDef}]`);
 		const splitedString = this._split(string);
@@ -140,8 +145,12 @@ class Parser {
 		return args;
 	}
 }
-
-export function parser(options?: options): Parser {
+/** Initialize parser instance with provided options
+ * @param {options} options - String to parse
+ * @returns {Parser}
+ */
+export function init(options?: options): Parser {
 	return new Parser(options);
 }
-export default parser;
+
+export default init;
