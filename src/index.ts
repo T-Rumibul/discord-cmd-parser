@@ -90,6 +90,9 @@ class Parser {
 		log(`Clearing args\nArgs definition: ${argsDef}`);
 		if (!argsDef) return { ...dirtArgs.named, _: dirtArgs.unNamed };
 		argsDef.forEach((arg) => {
+			log(`CURRENT ARG ${arg}`);
+			log(clearArgs.hasOwnProperty(arg));
+			if (clearArgs.hasOwnProperty(arg)) return;
 			clearArgs[arg] = dirtArgs.unNamed.shift();
 		});
 		clearArgs._ = dirtArgs.unNamed;

@@ -1,4 +1,4 @@
-import Parser from '../dist/index';
+import Parser from './index';
 const parser = Parser();
 test('test with default args without args definition', () => {
 	expect(parser.parse('git remote add origin https://github.com')).toEqual({
@@ -60,5 +60,20 @@ test(`test args definition`, () => {
 		command: 'git',
 		arg1: 'remote',
 		arg2: 'add',
+	});
+});
+
+test(`test for duplicate args`, () => {
+	expect(
+		parser.parse(`git remote add and "other dasds" -arg2 replace -_ error`, [
+			'command',
+			'arg1',
+			'arg2',
+		])
+	).toEqual({
+		_: ['add', 'and', 'other dasds'],
+		command: 'git',
+		arg1: 'remote',
+		arg2: 'replace',
 	});
 });

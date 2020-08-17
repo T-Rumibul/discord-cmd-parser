@@ -62,3 +62,18 @@ test(`test args definition`, () => {
 		arg2: 'add',
 	});
 });
+
+test(`test for duplicate args`, () => {
+	expect(
+		parser.parse(`git remote add and "other dasds" -arg2 replace -_ error`, [
+			'command',
+			'arg1',
+			'arg2',
+		])
+	).toEqual({
+		_: ['add', 'and', 'other dasds'],
+		command: 'git',
+		arg1: 'remote',
+		arg2: 'replace',
+	});
+});
