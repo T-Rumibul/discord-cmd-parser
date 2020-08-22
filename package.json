@@ -20,8 +20,8 @@
     ],
     "scripts": {
         "dev": "set DEBUG=Parser:*,-Parser:DEEP_INFO && nodemon --exec ts-node src/index.ts",
-        "build": "tsc && yarn uglifyjs dist/index.js --comments -o dist/index.js",
-        "dev:test": "jest src/index.test.ts"
+        "build": "tsc && yarn uglifyjs-folder dist/ --comments",
+        "dev:test": "set DEBUG=Parser:*,-Parser:DEEP_INFO && yarn jest src/index.test.ts"
     },
     "devDependencies": {
         "@types/debug": "^4.1.5",
@@ -41,7 +41,8 @@
         "ts-jest": "^26.2.0",
         "ts-node": "^8.10.2",
         "typescript": "^3.9.7",
-        "uglify-js": "^3.10.1"
+        "uglify-js": "^3.10.1",
+        "uglifyjs-folder": "^2.0.0"
     },
     "dependencies": {
         "debug": "^4.1.1"
