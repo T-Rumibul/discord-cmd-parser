@@ -63,10 +63,10 @@ export class Parser {
 					logDeep(
 						`Second Quote NOT FOUND\nITERATION: ${i}\nSTRING: |${string}|\n-----------------`
 					);
-					splitedString.push(string.slice(0));
+					splitedString.push(string.slice(0).toLowerCase());
 					break;
 				}
-				splitedString.push(string.slice(1, nextQuote));
+				splitedString.push(string.slice(1, nextQuote).toLowerCase());
 				string = string.slice(nextQuote + 2);
 				i = 0;
 				continue;
@@ -76,12 +76,12 @@ export class Parser {
 				logDeep(
 					`Found whitespace\nITERATION: ${i}\nSTRING: |${string}|\n-----------------`
 				);
-				splitedString.push(string.slice(0, i));
+				splitedString.push(string.slice(0, i).toLowerCase());
 				string = string.slice(i + 1);
 				i = 0;
 			} else if (i === string.length - 1) {
 				logDeep(`STRING END\nITERATION: ${i}\nSTRING: |${string}|\n-----------------`);
-				splitedString.push(string.slice(0));
+				splitedString.push(string.slice(0).toLowerCase());
 			}
 		}
 		log(`String is splited: ${JSON.stringify(splitedString)}`);
