@@ -2,7 +2,7 @@ node_modules
 src
 .eslintrc.json
 .prettierrc
-README.md
 tsconfig.json
 yarn.lock
 .gitignore
+parser.build.test.js

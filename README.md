@@ -37,7 +37,7 @@ or newlines"                  https://git           hub.com           `), ['comm
 
 | Option        | Type          | Deffault | Description  | 
 | ------------- |:--------------:| ---------- | -----:|
-| prefix | string | "" | currently not used
+| prefix | string | "" | pefix to use for getCommand method
 | useQuotes | boolean | true | if false quotes will be ignored  |
 | quotesType| string | "|symbol to separate long arg|
 |namedSeparator| string | - | symbol to separate named args

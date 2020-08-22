@@ -3,7 +3,6 @@ const log = debug('Parser:INFO');
 const logDeep = debug('Parser:DEEP_INFO');
 interface options {
 	prefix?: string;
-	includeCmd: boolean;
 	useQuotes?: boolean;
 	quotesType?: string;
 	namedSeparator?: string;
@@ -20,15 +19,14 @@ interface dirtArgs {
 
 const deffaultOptions: options = {
 	prefix: '',
-	includeCmd: false,
 	useQuotes: true,
 	quotesType: '"',
 	namedSeparator: '-',
 };
-interface Parser {
+export interface Parser {
 	pOptions: options;
 }
-class Parser {
+export class Parser {
 	constructor(options?: options) {
 		this.pOptions = { ...deffaultOptions, ...options };
 	}
@@ -36,8 +34,11 @@ class Parser {
 	private _split(dirtString: string): Array<string> {
 		// Replace multiple spaces or new lines for correct spliting
 		log(`Spliting string: |${dirtString}|`);
-		let string = dirtString.replace(/\s\s+/g, ' ');
-		log(`Removed whitespaces and new lines: |${string}|`);
+
+		let string = dirtString.trim().replace(/\s\s+/g, ' ');
+
+		log(`Removed extra whitespaces and new lines: |${string}|`);
+
 		const splitedString: Array<string> = [];
 		for (let i = 0; i < string.length; i++) {
 			logDeep(`-------SPLITTING------- \nITERATION: ${i}\nSTRING: |${string}|`);
@@ -48,9 +49,11 @@ class Parser {
 
 				for (let j = 1; j < string.length; j++) {
 					if (string[j] === this.pOptions.quotesType) {
+
 						logDeep(
 							`Second Quote\nITERATION: ${j}\nSTRING: |${string}|\n-----------------`
 						);
+
 						nextQuote = j;
 						break;
 					}
@@ -91,7 +94,6 @@ class Parser {
 		if (!argsDef) return { ...dirtArgs.named, _: dirtArgs.unNamed };
 		argsDef.forEach((arg) => {
 			log(`CURRENT ARG ${arg}`);
-			log(clearArgs.hasOwnProperty(arg));
 			if (clearArgs.hasOwnProperty(arg)) return;
 			clearArgs[arg] = dirtArgs.unNamed.shift();
 		});
@@ -147,7 +149,13 @@ class Parser {
 
 		return args;
 	}
+
 }
+
+export interface init {
+	(options?: options): Parser;
+}
+
 /** Initialize parser instance with provided options
  * @param {options} options - String to parse
  * @returns {Parser}
