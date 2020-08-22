@@ -27,7 +27,7 @@ console.log(parser.parse('git -arg1 remote -arg2 add -arg3 origin https://github
 
 // Also you can use quotes to define long args with spaces and new lines
 console.log(parser.parse(`command "super long arg with spaces or tabs   
-or newlines" https://github.com`), ['command', 'longArg', 'link']) // ---> {_:[], command: 'command', longArg: 'super long arg with spaces or tabs or newlines', link: 'https://github.com'}
+or newlines" https://github.com`), ['command', 'longArg', 'link']) // ---> {_:[], command: 'command', longarg: 'super long arg with spaces or tabs or newlines', link: 'https://github.com'}
 
 //  Multiple spaces, tabs and new lines always will be converted to one space
 console.log(parser.parse(`command                "super long arg with spaces or tabs   

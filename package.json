@@ -20,7 +20,7 @@
     ],
     "scripts": {
         "dev": "set DEBUG=Parser:*,-Parser:DEEP_INFO && nodemon --exec ts-node src/index.ts",
-        "build": "tsc && yarn uglifyjs-folder dist/ --comments",
+        "build": "tsc && yarn uglifyjs-folder dist/ -e  -x .js -o dist --comments",
         "dev:test": "set DEBUG=Parser:*,-Parser:DEEP_INFO && yarn jest src/index.test.ts"
     },
     "devDependencies": {

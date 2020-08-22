@@ -65,11 +65,7 @@ test(`test args definition`, () => {
 
 test(`test for duplicate args`, () => {
 	expect(
-		parser.parse(`git remote add and "other dasds" -arg2 replace -_ error`, [
-			'command',
-			'arg1',
-			'arg2',
-		])
+		parser.parse(`git remote add and "other dasds" -arg2 replace -_ error`, ['command', 'arg1', 'arg2'])
 	).toEqual({
 		_: ['add', 'and', 'other dasds'],
 		command: 'git',
@@ -80,11 +76,30 @@ test(`test for duplicate args`, () => {
 
 test(`test for lowerCase`, () => {
 	expect(
-		parser.parse(`GIT remote testLower "testLower iN Quotes" -namedNotInLower test`, ['definedNotInLower'])
+		parser.parse(`GIT remote testLower "testLower iN Quotes" -namedNotInLower test`, [
+			'definedNotInLower',
+		])
 	).toEqual({
 		_: ['remote', 'testlower', 'testLower iN Quotes'],
 		definedNotInLower: 'git',
-		namedNotInLower: 'test'
+		namedNotInLower: 'test',
+	});
+});
 
+test(`test for get command`, () => {
+	expect(
+		parser.getCommand(`!GIT remote testLower "testLower iN Quotes" -namedNotInLower test`).command
+	).toBe('git');
+});
+
+test(`test for get command parseArgs`, () => {
+	expect(
+		parser.getCommand(`!GIT remote testLower "testLower iN Quotes" -namedNotInLower test`).parseArgs()
+	).toEqual({
+		command: 'git',
+		args: {
+			_: ['remote', 'testlower', 'testLower iN Quotes'],
+			namedNotInLower: 'test',
+		},
 	});
 });
