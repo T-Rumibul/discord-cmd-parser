@@ -14,6 +14,14 @@ const Parser = require('discord-cmd-parser');
 // Initialize with or without options
 const parser = Parser.init()
 
+// args and commands always tranfroms to lower case excemp names of the args and args in quotes
+
+// getCommand()
+console.log(parser.getCommand(`!GIT remote testLower "testLower iN Quotes" -namedNotInLower test`)) // ---> { command: 'git', parseArgs: function()}
+
+console.log(parser.getCommand(`!GIT remote testLower "testLower iN Quotes" -namedNotInLower test`).parseArgs()) // ---> {command: 'git', args: {_: ['remote', 'testlower', 'testLower iN Quotes'], namedNotInLower: 'test'}
+
+// parse()
 console.log(parser.parse('git remote add origin https://github.com')) // ---> {_:['git', 'remote', 'add', 'origin', 'https://github.com']}
 
 // Or with args definition
@@ -33,13 +41,18 @@ or newlines" https://github.com`), ['command', 'longArg', 'link']) // ---> {_:[]
 console.log(parser.parse(`command                "super long arg with spaces or tabs   
 or newlines"                  https://git           hub.com           `), ['command', 'longArg', 'link']) // ---> {_:['hub.com'], command: 'command', longArg: 'super long arg with spaces or tabs or newlines', link: 'https://git'}
 ```
+## Methods
+| Method  | return | Description  | 
+| ------------- |:--------------:| ---------- |
+| parse(string: string, argsDef?: Array<string>) | Object | Parses string into args.
+| getCommand(string: string, prefix?: prefix) | Object | Parse command from string
 ## Options
 
 | Option        | Type          | Deffault | Description  | 
 | ------------- |:--------------:| ---------- | -----:|
 | prefix | string | "" | pefix to use for getCommand method
-| useQuotes | boolean | true | if false quotes will be ignored  |
-| quotesType| string | "|symbol to separate long arg|
+| useQuotes | boolean | true | if false quotes will be ignored 
+| quotesType| string | "|symbol to separate long arg
 |namedSeparator| string | - | symbol to separate named args
 
 ## License
