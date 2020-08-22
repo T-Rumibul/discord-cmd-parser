@@ -30,7 +30,7 @@ test(`test with whitespaces and new lines and quotes without args definition`, (
 	).toEqual({
 		_: ['git', 'test quotes for match', 'dddd dddd', 'remote', 'add'],
 		test: 'another named arg with quotes',
-		testtwo: 'withoutquotes',
+		testTwo: 'withoutquotes',
 		origin: 'http s:/ /gi thub.com',
 	});
 });
@@ -79,3 +79,13 @@ test(`test for duplicate args`, () => {
 });
 
 
+test(`test for lowerCase`, () => {
+	expect(
+		parser.parse(`GIT remote testLower "testLower iN Quotes" -namedNotInLower test`, ['definedNotInLower'])
+	).toEqual({
+		_: ['remote', 'testlower', 'testLower iN Quotes'],
+		definedNotInLower: 'git',
+		namedNotInLower: 'test'
+
+	});
+});

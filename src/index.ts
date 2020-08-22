@@ -63,10 +63,10 @@ export class Parser {
 					logDeep(
 						`Second Quote NOT FOUND\nITERATION: ${i}\nSTRING: |${string}|\n-----------------`
 					);
-					splitedString.push(string.slice(0).toLowerCase());
+					splitedString.push(string.slice(0));
 					break;
 				}
-				splitedString.push(string.slice(1, nextQuote).toLowerCase());
+				splitedString.push(string.slice(1, nextQuote));
 				string = string.slice(nextQuote + 2);
 				i = 0;
 				continue;
@@ -76,22 +76,36 @@ export class Parser {
 				logDeep(
 					`Found whitespace\nITERATION: ${i}\nSTRING: |${string}|\n-----------------`
 				);
-				splitedString.push(string.slice(0, i).toLowerCase());
+				splitedString.push(string.slice(0, i));
 				string = string.slice(i + 1);
 				i = 0;
 			} else if (i === string.length - 1) {
 				logDeep(`STRING END\nITERATION: ${i}\nSTRING: |${string}|\n-----------------`);
-				splitedString.push(string.slice(0).toLowerCase());
+				splitedString.push(string.slice(0));
 			}
 		}
 		log(`String is splited: ${JSON.stringify(splitedString)}`);
 		return splitedString;
 	}
+	private _isSingleWord(string: string) {
+		if (string.match(/\s/g) === null) {
+			return true
+		}
+		return false
+	}
+	// transforms to lower if string is single word
+	private _toLowerCase(string: string) {
+		if (this._isSingleWord(string)) return string.toLowerCase()
+		return string;
+	}
 
 	private _clearArgs(dirtArgs: dirtArgs, argsDef?: Array<string>): args {
 		let clearArgs: args = { ...dirtArgs.named };
+
 		log(`Clearing args\nArgs definition: ${argsDef}`);
+
 		if (!argsDef) return { ...dirtArgs.named, _: dirtArgs.unNamed };
+
 		argsDef.forEach((arg) => {
 			log(`CURRENT ARG ${arg}`);
 			if (clearArgs.hasOwnProperty(arg)) return;
@@ -134,13 +148,13 @@ export class Parser {
 							.shift()
 							.split('')
 							.slice(this.pOptions.namedSeparator.length)
-							.join('')]: splitedString.shift(),
+							.join('')]: this._toLowerCase(splitedString.shift()),
 					},
 				};
 
 				continue;
 			}
-			dirtArgs.unNamed.push(splitedString.shift());
+			dirtArgs.unNamed.push(this._toLowerCase(splitedString.shift()));
 		}
 
 		log(`Splited array is parsed: ${JSON.stringify(dirtArgs)}`);
