@@ -44,17 +44,17 @@ or newlines"                  https://git           hub.com           `), ['comm
 ## Methods
 | Method  | return | Description  | 
 | ------------- |:--------------:| ---------- |
-| parse(string: string, argsDef?: Array<string>) | Object | Parses string into args.
-| getCommand(string: string, prefix?: prefix) | Object | Parse command from string
+| parse(string: string, argsDef?: Array<string>) | Object | Parses string into args.|
+| getCommand(string: string, prefix?: prefix) | Object | Parse command from string|
 ## Options
 
 | Option        | Type          | Deffault | Description  | 
 | ------------- |:--------------:| ---------- | -----:|
-| prefix | string | "" | pefix to use for getCommand method
-| useQuotes | boolean | true | if false quotes will be ignored 
-| quotesType| string | "|symbol to separate long arg
-|namedSeparator| string | - | symbol to separate named args
+| prefix | string | "" | pefix to use for getCommand method |
+| useQuotes | boolean | true | if false quotes will be ignored | 
+| quotesType| string | "|symbol to separate long arg |
+|namedSeparator| string | - | symbol to separate named args |
 
 ## License
 MIT License
-Copyright (c) 2020 [RynerNO](https://github.com/RynerNO) <ryner.no@gmail.com>
+Copyright (c) 2020 [RynerNO](https://github.com/RynerNO) <mailto:ryner.no@gmail.com>
