@@ -15,7 +15,7 @@
     "outDir": "dist",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "sourceMap": false,
+    "sourceMap": false
   },
   "include": ["src/*"],
   "exclude": ["node_modules", "src/*.test.ts"]
