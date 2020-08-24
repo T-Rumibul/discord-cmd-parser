@@ -127,4 +127,4 @@ If you need help, join my [discord server](https://discord.gg/75NmVJa)
 
 [MIT License](https://github.com/RynerNO/discord-cmd-parser/blob/master/LICENSE)
 
-Copyright (c) 2020 [RynerNO](https://github.com/RynerNO) <mailto:ryner.no@gmail.com>
+Copyright (c) 2020 [RynerNO](https://github.com/RynerNO) <ryner.no@gmail.com>

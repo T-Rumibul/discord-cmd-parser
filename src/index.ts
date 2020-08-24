@@ -1,4 +1,3 @@
-import { log, logDeep } from './utils/logger';
 import { split } from './functions/split';
 import { parseArray } from './functions/parseArray';
 import { parseDefinedArgs } from './functions/parseDefinedArgs';
@@ -37,19 +36,19 @@ export class Parser extends Events.EventEmitter {
 	 * console.log(parse('arg1 arg2 arg3', ['key1', 'key2'])); // ----> {_:['arg3'], key1: 'arg1', key2: 'arg2'}
 	 */
 	public parse(string: string | Array<string>, argsDef?: Array<string>): args {
-		log(`Got string: |${string}| \nGot args definition: [${argsDef}]`);
+		
 		const splitedString = split(string, {
 			useQuotes: this.useQuotes,
 			quotesType: this.quotesType,
 		});
 
 		const args = parseDefinedArgs(parseArray(splitedString, this.namedSeparator), argsDef);
-		log(`Parsing complete ${JSON.stringify(args)}`);
+		
 		this.emit('parse', args);
 		return args;
 	}
 	/**
-	 * Parse command from string based on prefix and returns it, if command is not found returns false
+	 * Parse command from string based on prefix and returns object with command property and parseArgs method, if command not found command property will be empty string
 	 * @param {string} string - string to parase command from
 	 */
 	public getCommand(string: string, prefix?: string): { command: string; parseArgs: Function } {
