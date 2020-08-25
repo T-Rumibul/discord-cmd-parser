@@ -9,7 +9,7 @@ interface options {
 	quotesType?: string;
 	namedSeparator?: string;
 }
-interface args {
+export interface args {
 	_?: Array<string>;
 	[name: string]: any;
 }
