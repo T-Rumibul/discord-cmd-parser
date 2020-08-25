@@ -6,3 +6,4 @@ tsconfig.json
 yarn.lock
 .gitignore
 parser.build.test.js
+coverage

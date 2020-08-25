@@ -36,14 +36,13 @@ export class Parser extends Events.EventEmitter {
 	 * console.log(parse('arg1 arg2 arg3', ['key1', 'key2'])); // ----> {_:['arg3'], key1: 'arg1', key2: 'arg2'}
 	 */
 	public parse(string: string | Array<string>, argsDef?: Array<string>): args {
-		
 		const splitedString = split(string, {
 			useQuotes: this.useQuotes,
 			quotesType: this.quotesType,
 		});
 
 		const args = parseDefinedArgs(parseArray(splitedString, this.namedSeparator), argsDef);
-		
+
 		this.emit('parse', args);
 		return args;
 	}
@@ -51,7 +50,10 @@ export class Parser extends Events.EventEmitter {
 	 * Parse command from string based on prefix and returns object with command property and parseArgs method, if command not found command property will be empty string
 	 * @param {string} string - string to parase command from
 	 */
-	public getCommand(string: string, prefix?: string): { command: string; parseArgs: Function } {
+	public getCommand(
+		string: string,
+		prefix?: string
+	): { command: string; parseArgs: { (argsDef?: Array<string>): args } } {
 		const currentPrefix = prefix || this.prefix;
 
 		const splitedString = split(string, { useQuotes: this.useQuotes, quotesType: this.quotesType });

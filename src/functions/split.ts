@@ -6,6 +6,7 @@ interface options {
  * Split string into args
  */
 export function split(string: string | Array<string>, options: options): Array<string> {
+	// For the cases whe already parsed array is passed as argument
 	if (Array.isArray(string)) return string;
 
 	const { useQuotes, quotesType } = options;
