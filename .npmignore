@@ -7,3 +7,5 @@ yarn.lock
 .gitignore
 parser.build.test.js
 coverage
+yarn-error.log
+yarn.lock
