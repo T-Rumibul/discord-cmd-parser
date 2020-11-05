@@ -84,8 +84,8 @@ export interface init {
  * @param {options} options - String to parse
  * @returns {Parser}
  */
-export function init(options?: options): Parser {
+export function createParser(options?: options): Parser {
 	return new Parser(options);
 }
 
-export default init;
+export default createParser;
