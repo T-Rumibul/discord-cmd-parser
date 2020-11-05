@@ -18,7 +18,7 @@ npm install discord-cmd-parser
 const  Parser = require('discord-cmd-parser');
 
 // Initialize with or without options
-const  parser = Parser.init()
+const  parser = Parser.createParser()
 // args and commands always tranfroms to lower case excemp names of the args and args in quotes  
 // getCommand()
 
