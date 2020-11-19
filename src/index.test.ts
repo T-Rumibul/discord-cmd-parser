@@ -94,12 +94,22 @@ test(`test for get command`, () => {
 
 test(`test for get command parseArgs`, () => {
 	expect(
-		parser.getCommand(`!GIT remote testLower "testLower iN Quotes" -namedNotInLower test`).parseArgs()
+		parser.getCommand(`!GIT remote testLower F "testLower iN Quotes" -namedNotInLower test`).parseArgs()
 	).toEqual({
 		command: 'git',
 		args: {
-			_: ['remote', 'testlower', 'testLower iN Quotes'],
+			_: ['remote', 'testlower', 'f', 'testLower iN Quotes'],
 			namedNotInLower: 'test',
+		},
+	});
+});
+test(`test for get command parseArgs`, () => {
+	expect(
+		parser.getCommand(`!GIT F t`).parseArgs()
+	).toEqual({
+		command: 'git',
+		args: {
+			_: ['f', 't'],
 		},
 	});
 });

@@ -34,18 +34,21 @@ export function split(string: string | Array<string>, options: options): Array<s
 
 			splitedString.push(string.slice(1, nextQuote));
 			string = string.slice(nextQuote + 2);
-			i = 0;
+			i = -1;
 			continue;
 		}
 		// Check if char is whitespace
 		if (string[i].match(/\s/)) {
 			splitedString.push(string.slice(0, i));
 			string = string.slice(i + 1);
-			i = 0;
+			i = -1;
+			continue
 			// if end of the string
 		} else if (i === string.length - 1) {
 			splitedString.push(string.slice(0));
+			break;
 		}
 	}
 	return splitedString;
 }
+

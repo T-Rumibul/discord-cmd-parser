@@ -57,7 +57,6 @@ export class Parser extends Events.EventEmitter {
 		const currentPrefix = prefix || this.prefix;
 
 		const splitedString = split(string, { useQuotes: this.useQuotes, quotesType: this.quotesType });
-
 		const command = splitedString.splice(0, 1).join('').split('');
 		const result = {
 			command: '',
