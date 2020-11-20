@@ -104,12 +104,13 @@ test(`test for get command parseArgs`, () => {
 	});
 });
 test(`test for get command parseArgs`, () => {
-	expect(
-		parser.getCommand(`!GIT F t`).parseArgs()
-	).toEqual({
+	expect(parser.getCommand(`!GIT F t`).parseArgs()).toEqual({
 		command: 'git',
 		args: {
 			_: ['f', 't'],
 		},
 	});
+});
+test(`test for no prefix`, () => {
+	expect(parser.getCommand(`GIT F t`)).toEqual(undefined);
 });

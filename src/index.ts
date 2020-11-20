@@ -14,13 +14,11 @@ export interface args {
 	[name: string]: any;
 }
 
-export interface Parser {
-	prefix?: string;
-	useQuotes?: boolean;
-	quotesType?: string;
-	namedSeparator?: string;
-}
 export class Parser extends Events.EventEmitter {
+	prefix: string;
+	useQuotes: boolean;
+	quotesType: string;
+	namedSeparator: string;
 	constructor(options: options = {}) {
 		super();
 		this.prefix = options.prefix || '!';
@@ -46,16 +44,16 @@ export class Parser extends Events.EventEmitter {
 		this.emit('parse', args);
 		return args;
 	}
+	public hasPrefix(string: string) {
+		if (string.trim().slice(0, this.prefix.length) !== this.prefix) return false;
+		return true;
+	}
 	/**
 	 * Parse command from string based on prefix and returns object with command property and parseArgs method, if command not found command property will be empty string
 	 * @param {string} string - string to parase command from
 	 */
-	public getCommand(
-		string: string,
-		prefix?: string
-	): { command: string; parseArgs: { (argsDef?: Array<string>): args } } {
-		const currentPrefix = prefix || this.prefix;
-
+	public getCommand(string: string): { command: string; parseArgs: { (argsDef?: Array<string>): args } } {
+		if (!this.hasPrefix(string)) return;
 		const splitedString = split(string, { useQuotes: this.useQuotes, quotesType: this.quotesType });
 		const command = splitedString.splice(0, 1).join('').split('');
 		const result = {
@@ -67,7 +65,7 @@ export class Parser extends Events.EventEmitter {
 				};
 			},
 		};
-		if (command.splice(0, currentPrefix.length).join('') === currentPrefix) {
+		if (command.splice(0, this.prefix.length).join('') === this.prefix) {
 			result.command = toLowerCase(command.join(''));
 		}
 		this.emit('command', result);
