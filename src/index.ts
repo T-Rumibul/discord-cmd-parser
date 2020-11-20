@@ -54,10 +54,14 @@ export class Parser extends Events.EventEmitter {
 	 */
 	public getCommand(string: string): { command: string; parseArgs: { (argsDef?: Array<string>): args } } {
 		if (!this.hasPrefix(string)) return;
-		const splitedString = split(string, { useQuotes: this.useQuotes, quotesType: this.quotesType });
-		const command = splitedString.splice(0, 1).join('').split('');
+		const clearedString = string.split('').splice(this.prefix.length).join('');
+		const splitedString = split(clearedString, {
+			useQuotes: this.useQuotes,
+			quotesType: this.quotesType,
+		});
+		const command = toLowerCase(splitedString.splice(0, 1).join(''));
 		const result = {
-			command: '',
+			command: command,
 			parseArgs: (argsDef?: Array<string>): args => {
 				return {
 					command: result.command,
@@ -65,9 +69,6 @@ export class Parser extends Events.EventEmitter {
 				};
 			},
 		};
-		if (command.splice(0, this.prefix.length).join('') === this.prefix) {
-			result.command = toLowerCase(command.join(''));
-		}
 		this.emit('command', result);
 		return result;
 	}
