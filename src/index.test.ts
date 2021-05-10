@@ -1,44 +1,12 @@
-import Parser from './index';
-const parser = Parser();
+
+import { createParser} from './index';
+
+
+const parser = createParser();
+
 test('test with default args without args definition', () => {
 	expect(parser.parse('git remote add origin https://github.com')).toEqual({
 		_: ['git', 'remote', 'add', 'origin', 'https://github.com'],
-	});
-});
-
-test('test with whitespaces and named args without args definition', () => {
-	expect(parser.parse('git remote add -origin   "http s:/  /gi thub.com"')).toEqual({
-		_: ['git', 'remote', 'add'],
-		origin: 'http s:/ /gi thub.com',
-	});
-});
-
-test(`test with whitespaces and new lines without args definition`, () => {
-	expect(
-		parser.parse(`git                     remote                add -origin
-	"http s:/ /gi thub.com"`)
-	).toEqual({
-		_: ['git', 'remote', 'add'],
-		origin: 'http s:/ /gi thub.com',
-	});
-});
-
-test(`test with whitespaces and new lines and quotes without args definition`, () => {
-	expect(
-		parser.parse(`git    "test quotes for match" "dddd dddd" -test "another named arg with quotes" -testTwo withoutQuotes                 remote                add -origin
-	"http s:/ /gi thub.com"`)
-	).toEqual({
-		_: ['git', 'test quotes for match', 'dddd dddd', 'remote', 'add'],
-		test: 'another named arg with quotes',
-		testTwo: 'withoutquotes',
-		origin: 'http s:/ /gi thub.com',
-	});
-});
-
-test(`test named from the start of the string`, () => {
-	expect(parser.parse(`-git add remote`)).toEqual({
-		_: ['remote'],
-		git: 'add',
 	});
 });
 
@@ -63,54 +31,24 @@ test(`test args definition`, () => {
 	});
 });
 
-test(`test for duplicate args`, () => {
-	expect(
-		parser.parse(`git remote add and "other dasds" -arg2 replace -_ error`, ['command', 'arg1', 'arg2'])
-	).toEqual({
-		_: ['add', 'and', 'other dasds'],
-		command: 'git',
-		arg1: 'remote',
-		arg2: 'replace',
-	});
-});
-
 test(`test for lowerCase`, () => {
 	expect(
-		parser.parse(`GIT remote testLower "testLower iN Quotes" -namedNotInLower test`, [
+		parser.parse(`GIT remote testLower "testLower iN Quotes"`, [
 			'definedNotInLower',
 		])
 	).toEqual({
 		_: ['remote', 'testlower', 'testLower iN Quotes'],
 		definedNotInLower: 'git',
-		namedNotInLower: 'test',
 	});
 });
 
-test(`test for get command`, () => {
+test(`empy string test`, () => {
 	expect(
-		parser.getCommand(`!GIT remote testLower "testLower iN Quotes" -namedNotInLower test`).command
-	).toBe('git');
-});
-
-test(`test for get command parseArgs`, () => {
-	expect(
-		parser.getCommand(`!GIT remote testLower F "testLower iN Quotes" -namedNotInLower test`).parseArgs()
+		parser.parse(``, [
+			'definedNotInLower',
+		])
 	).toEqual({
-		command: 'git',
-		args: {
-			_: ['remote', 'testlower', 'f', 'testLower iN Quotes'],
-			namedNotInLower: 'test',
-		},
+		_: [],
+		definedNotInLower: undefined,
 	});
-});
-test(`test for get command parseArgs`, () => {
-	expect(parser.getCommand(`!GIT F t`).parseArgs()).toEqual({
-		command: 'git',
-		args: {
-			_: ['f', 't'],
-		},
-	});
-});
-test(`test for no prefix`, () => {
-	expect(parser.getCommand(`GIT F t`)).toEqual(undefined);
 });
