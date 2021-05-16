@@ -1,29 +1,36 @@
-
-import { createParser} from './index';
-
+import { createParser } from './index';
 
 const parser = createParser();
 
 test('test with default args without args definition', () => {
-	expect(parser.parse('git remote add origin https://github.com')).toEqual({
-		_: ['git', 'remote', 'add', 'origin', 'https://github.com'],
-	});
+	expect(parser.parse('git remote add origin https://github.com')).toEqual([
+		'git',
+		'remote',
+		'add',
+		'origin',
+		'https://github.com',
+	]);
 });
 
 test(`test quotes from the start of the string`, () => {
-	expect(parser.parse(`"git add remote" and other`)).toEqual({
-		_: ['git add remote', 'and', 'other'],
-	});
+	expect(parser.parse(`"git add remote" and other`)).toEqual(['git add remote', 'and', 'other']);
 });
 
 test(`test quotes in the end of the string`, () => {
-	expect(parser.parse(`"git add remote" and "other dasds"`)).toEqual({
-		_: ['git add remote', 'and', 'other dasds'],
-	});
+	expect(parser.parse(`"git add remote" and "other dasds"`)).toEqual([
+		'git add remote',
+		'and',
+		'other dasds',
+	]);
 });
 
 test(`test args definition`, () => {
-	expect(parser.parse(`git remote add and "other dasds"`, ['command', 'arg1', 'arg2'])).toEqual({
+	expect(
+		parser.parseCommandArgs(
+			[{ name: 'command' }, { name: 'arg1' }, { name: 'arg2' }],
+			parser.parse(`git remote add and "other dasds"`)
+		)
+	).toEqual({
 		_: ['and', 'other dasds'],
 		command: 'git',
 		arg1: 'remote',
@@ -31,24 +38,30 @@ test(`test args definition`, () => {
 	});
 });
 
-test(`test for lowerCase`, () => {
+test(`test args definition default value`, () => {
 	expect(
-		parser.parse(`GIT remote testLower "testLower iN Quotes"`, [
-			'definedNotInLower',
-		])
+		parser.parseCommandArgs(
+			[{ name: 'command' }, { name: 'arg1' }, { name: 'arg2', default: 'odd' }],
+			parser.parse(`git remote add and "other dasds"`)
+		)
 	).toEqual({
-		_: ['remote', 'testlower', 'testLower iN Quotes'],
-		definedNotInLower: 'git',
+		_: ['and', 'other dasds'],
+		command: 'git',
+		arg1: 'remote',
+		arg2: 'add',
 	});
 });
 
-test(`empy string test`, () => {
+test(`test args definition default value 2`, () => {
 	expect(
-		parser.parse(``, [
-			'definedNotInLower',
-		])
+		parser.parseCommandArgs(
+			[{ name: 'command' }, { name: 'arg1', default: 'asdas' }, { name: 'arg2', default: 'odd' }],
+			parser.parse(`git remote`)
+		)
 	).toEqual({
 		_: [],
-		definedNotInLower: undefined,
+		command: 'git',
+		arg1: 'remote',
+		arg2: 'odd',
 	});
 });

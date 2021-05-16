@@ -39,7 +39,8 @@ or newlines" https://git hub.com `), ['command', 'longArg', 'link']) // ---> {_:
 
 | Method | return | Description |
 | ------ | ------ | ----------- |
-| parse(string: string, argsDef?: Array<string>) | Object | Parses string into args.|
+| parse(string: string) | []string | Parses string into args.|
+| parseCommandArgs(commandArgsDef: IargsDef[], parsedMessage: string[]) | Object | assign parsed string to args.|
 | disableQuotes() | void | Disables parsing args in quotes as one.|
 | enableQuotes() | void | Enable parsing args in quotes as one.|
 | changeQuotesType(value: string) | void | Change quotes type.|
