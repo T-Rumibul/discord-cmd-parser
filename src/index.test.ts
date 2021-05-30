@@ -27,8 +27,19 @@ test(`test quotes in the end of the string`, () => {
 test(`test args definition`, () => {
 	expect(
 		parser.parseCommandArgs(
-			[{ name: 'command' }, { name: 'arg1' }, { name: 'arg2' }],
-			parser.parse(`git remote add and "other dasds"`)
+			parser.parse(`git remote add and "other dasds"`),
+			{
+				command: {
+					default: ""
+				},
+				arg1: {
+					default: ""
+				},
+				arg2: {
+					default: ""
+				}	
+			}
+			,
 		)
 	).toEqual({
 		_: ['and', 'other dasds'],
@@ -41,8 +52,18 @@ test(`test args definition`, () => {
 test(`test args definition default value`, () => {
 	expect(
 		parser.parseCommandArgs(
-			[{ name: 'command' }, { name: 'arg1' }, { name: 'arg2', default: 'odd' }],
-			parser.parse(`git remote add and "other dasds"`)
+			parser.parse(`git remote add and "other dasds"`),
+			{
+				command: {
+					default: ""
+				},
+				arg1: {
+					default: ""
+				},
+				arg2: {
+					default: "odd"
+				}	
+			}
 		)
 	).toEqual({
 		_: ['and', 'other dasds'],
@@ -55,13 +76,38 @@ test(`test args definition default value`, () => {
 test(`test args definition default value 2`, () => {
 	expect(
 		parser.parseCommandArgs(
-			[{ name: 'command' }, { name: 'arg1', default: 'asdas' }, { name: 'arg2', default: 'odd' }],
-			parser.parse(`git remote`)
+			parser.parse(`git remote`),
+			{
+				command: {
+					default: ""
+				},
+				arg1: {
+					default: "asdas"
+				},
+				arg2: {
+					default: "odd"
+				}	
+			}
+			
+		
 		)
 	).toEqual({
 		_: [],
 		command: 'git',
 		arg1: 'remote',
 		arg2: 'odd',
+	});
+});
+
+test(`test args definition default with empty object`, () => {
+	expect(
+		parser.parseCommandArgs(
+			parser.parse(`git remote`),
+			{}
+			
+		
+		)
+	).toEqual({
+		_: ["git", "remote"],
 	});
 });

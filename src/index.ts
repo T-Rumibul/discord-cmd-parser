@@ -1,10 +1,18 @@
-interface parseResults extends Record<string, string | string[]> {
-	_: string[];
+export interface IargsDefinition {
+	[key: string]: {
+		default: string
+	}
 }
-export interface IargsDef {
-	name: string;
-	default?: string;
-}
+
+
+type ParsedDefs<T> = {
+	[K in keyof T]: string;
+};
+type ParsedUndefined = { _: string[] }
+
+
+
+
 
 export class Parser {
 	private useQuotes: boolean;
@@ -23,23 +31,32 @@ export class Parser {
 		let parsedMessage: string[] = this.split(string);
 		return parsedMessage;
 	}
-	/** Parses string to args
-	 * @param {IargsDef[]} commandArgsDef  -
-	 * @param {string[]} parsedMessage - parsed message
+	/** Parses a string split into arguments, and assigns them to the declared arguments in order they apear
+	 * 
+	 *
 	 */
-	public parseCommandArgs(commandArgsDef: IargsDef[], parsedMessage: string[]) {
-		const parsedArgs: parseResults = {
+	public parseCommandArgs<T extends IargsDefinition>(parsedMessage: string[],  argsDefs: T): ParsedDefs<typeof argsDefs> & ParsedUndefined;
+	public parseCommandArgs(parsedMessage: string[], argsDefs: undefined): ParsedUndefined;
+	public parseCommandArgs(parsedMessage: any,  argsDefs: any): any  {
+		const parsedUndefined: ParsedUndefined = {
 			_: [],
 		};
-		if (commandArgsDef.length > 0) {
-			commandArgsDef.forEach((arg: IargsDef) => {
-				if (parsedArgs[arg.name] !== undefined) return;
-				const value = parsedMessage.shift();
-				parsedArgs[arg.name] = value || arg.default;
-			});
+		if(typeof argsDefs === "undefined") {
+			return parsedUndefined._ = parsedMessage;
 		}
-		if (parsedMessage.length > 0) parsedArgs._ = parsedMessage;
-		return parsedArgs;
+		
+		if(typeof argsDefs === "object") {
+			let parsedDefs: ParsedDefs<typeof argsDefs> = Object.create({})
+			for(let key in argsDefs) {
+				let value = parsedMessage.shift()
+				parsedDefs[key] = (typeof value === 'undefined') ? argsDefs[key].default : value
+			}
+
+		
+		if (parsedMessage.length > 0) parsedUndefined._ = parsedMessage;
+		return Object.assign(parsedDefs, parsedUndefined);
+		}
+		
 	}
 	private split(string: string, splitedString: string[] = []): string[] {
 		if (string.length == 0) return splitedString;

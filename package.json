@@ -1,7 +1,7 @@
 {
     "name": "discord-cmd-parser",
-    "version": "2.1.0",
-    "description": "Parser for chat commands",
+    "version": "2.2.0",
+    "description": "Parser for discord chat commands",
     "main": "dist/index.js",
     "author": "RynerNO",
     "license": "MIT",

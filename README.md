@@ -34,13 +34,16 @@ or newlines" https://github.com`), ['command', 'longArg', 'link']) // ---> {_:[]
 // Multiple spaces, tabs and new lines always will be converted to one space
 console.log(parser.parse(`command "super long arg with spaces or tabs
 or newlines" https://git hub.com `), ['command', 'longArg', 'link']) // ---> {_:['hub.com'], command: 'command', longArg: 'super long arg with spaces or tabs or newlines', link: 'https://git'}
+
+console.log(parser.parseCommandArgs( parser.parse(`git remote test1 test2`), {command: { default: ""}, arg1: { default: "asdas" }, arg2: { default: "odd" }})) // ---> {_: ["test2"], command: 'git', arg1: 'remote',arg2: 'test1'}
+
 ```
 ## Methods
 
 | Method | return | Description |
 | ------ | ------ | ----------- |
 | parse(string: string) | []string | Parses string into args.|
-| parseCommandArgs(commandArgsDef: IargsDef[], parsedMessage: string[]) | Object | assign parsed string to args.|
+| parseCommandArgs(parsedMessage: string[], commandArgsDef: IargsDefinition[]) | Object | assign parsed string to args.|
 | disableQuotes() | void | Disables parsing args in quotes as one.|
 | enableQuotes() | void | Enable parsing args in quotes as one.|
 | changeQuotesType(value: string) | void | Change quotes type.|
@@ -63,4 +66,4 @@ If you need help, join my [discord server](https://discord.gg/75NmVJa)
 
 [MIT License](https://github.com/RynerNO/discord-cmd-parser/blob/master/LICENSE)
 
-Copyright (c) 2020 [RynerNO](https://github.com/RynerNO) <ryner.no@gmail.com>
+Copyright (c) 2021 [RynerNO](https://github.com/RynerNO) <ryner.no@gmail.com>
