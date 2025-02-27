@@ -1,7 +1,6 @@
   
 
 # Discord Args Parser
-[![Codacy Badge](https://img.shields.io/codacy/grade/f21a6e132aa14835b2dd080b60c46bf9.svg?style=for-the-badge)](https://www.codacy.com/manual/ryner.no/discord-cmd-parser?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=RynerNO/discord-cmd-parser&amp;utm_campaign=Badge_Grade) [![NPM](https://img.shields.io/npm/l/discord-cmd-parser?style=for-the-badge)](https://github.com/RynerNO/discord-cmd-parser/blob/master/LICENSE) [![donate](https://img.shields.io/badge/donate-Buy%20me%20a%20beer-FF5E5B?style=for-the-badge)](https://www.donationalerts.com/r/rynerno) [![discord](https://img.shields.io/badge/JOIN-DISCORD-7289DA?style=for-the-badge)](https://discord.gg/75NmVJa)
 
 ## Installation
 
@@ -54,16 +53,8 @@ console.log(parser.parseCommandArgs( parser.parse(`git remote test1 test2`), {co
 | useQuotes | boolean | true | if false quotes will be ignored | 
 | quotesType| string | "|symbol to separate long arg |
 
-## Donation
-
-If you like my project please consider the [donating](https://www.donationalerts.com/r/rynerno) to support me
-
-## Support
-
-If you need help, join my [discord server](https://discord.gg/75NmVJa)
-
 ## License
 
-[MIT License](https://github.com/RynerNO/discord-cmd-parser/blob/master/LICENSE)
+[MIT License](https://github.com/T-Rumibul/discord-cmd-parser/blob/master/LICENSE)
 
-Copyright (c) 2021 [RynerNO](https://github.com/RynerNO) <ryner.no@gmail.com>
+Copyright (c) 2021 [Andrew](https://github.com/T-Rumibul) <t.rumibul.work@gmail.com>
